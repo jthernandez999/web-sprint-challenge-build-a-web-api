@@ -1,5 +1,5 @@
 const express = require('express');
-const server = express();
+
 
 const helmet = require('helmet')
 const cors = require('cors')
@@ -9,6 +9,7 @@ const morgan = require('morgan')
 const actionsRouter = require('./actions/actions-router')
 const projectsRouter = require('./projects/projects-router')
 
+const server = express();
 server.use(helmet())
 server.use(cors())
 server.use(morgan('dev'))
