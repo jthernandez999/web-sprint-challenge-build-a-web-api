@@ -1,6 +1,7 @@
 {
     "name": "web-sprint-challenge-build-a-web-api",
     "version": "0.0.1",
+    "description": "sprint challenge",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
