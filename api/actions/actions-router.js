@@ -38,17 +38,10 @@ router.post('/', validateActionBody, validateId, (req, res, next) => {
         .catch(next)
 })
 
-router.put('/:id', validateId, validateActionBody, (req, res, next) => {
-    const { changes } = req.body
-    const { id } = req.params
-    Actions.update(changes)
+router.put('/:id', (req, res, next) => {
+    Actions.update(req.params.id, req.body)
     .then(updated  => {
-        console.log(updated)
-        res.json(updated)
-    })
-    .then(updated => {
-        console.log('from put', updated)
-        res.json(updated)
+        res.status(200).json(updated)
     })
     .catch(next)
 })
