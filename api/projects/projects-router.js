@@ -2,7 +2,8 @@
 const router = require('express').Router();
 const Projects = require('./projects-model')
 
-const { validateProject } = require('./projects-middleware')
+const { validateProject, validateId, } = require('./projects-middleware');
+const { rawListeners } = require('superagent');
 
 router.get('/', (req, res, next) => {
     Projects.get()
@@ -34,28 +35,35 @@ router.get('/:id/actions', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id', validateProject,(req, res, next) => {
-    Projects.update(req.params.id, {description: req.body})
-    const changes = req.body
-    .then(updated => {
-        res.status(200).json(updated)
-    })
-    .catch(next)
-})
-router.put('/:id', validateProject,(req, res, next) => {
+
+router.put('/:id', validateProject, validateId,(req, res, next) => {
     Projects.update(req.params.id, req.body)
-    .then(updatedProject => {
-        if(!updatedProject) {
-            res.status(404).json({
-                message: 'there is no project with the given id'
-            })
+    .then(() => {
+        return Projects.get(req.params.id)
+    })
+    .then(project => {
+        if(project){ 
+            res.json(project)
         } else {
-            res.status(200).json(updatedProject)
+            res.status(404).json({ 
+                message: 'here is no project with the given id'
+            })
         }
-        
     })
     .catch(next)
 })
+
+// router.put('/:id', validateProject, validateId,(req, res, next) => {
+//     Projects.update(req.params.id, req.body)
+//     .then(() => {
+//         return Projects.get(req.params.id)
+//     })
+//     .then(project => {
+//         res.json(project)
+//     })
+//     .catch(next)
+// })
+
 
 router.delete('/:id', async (req, res, next) =>{
     try {
