@@ -22,7 +22,7 @@ server.get('/', (req, res) => {
     res.status(200).json({
         status: 200, 
         message: 'This API is running!!', 
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
     })
 })
 // Configure your server here
