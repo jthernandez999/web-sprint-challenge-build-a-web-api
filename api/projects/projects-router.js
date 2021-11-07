@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Projects = require('./projects-model')
 
 const { validateProject, validateId, } = require('./projects-middleware');
-const { rawListeners } = require('superagent');
+
 
 router.get('/', (req, res, next) => {
     Projects.get()

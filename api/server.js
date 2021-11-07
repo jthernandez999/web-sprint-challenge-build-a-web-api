@@ -11,7 +11,7 @@ const projectsRouter = require('../api/projects/projects-router')
 
 server.use(helmet())
 server.use(cors())
-server.use(morgan('dev'))
+// server.use(morgan('dev'))
 server.use(express.json())
 
 server.use('/api/projects', projectsRouter)
