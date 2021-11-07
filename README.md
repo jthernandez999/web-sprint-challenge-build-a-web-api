@@ -147,7 +147,18 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+Core features are its the same programming language for both client and server. Its single threaded, which removes the complexity involvded in handling multiple threads.Main feature of express are middleware, routing, and helpers. 
+
 1. Understand and explain the use of Middleware.
+Are functions that can get the request and response objects, operate on them and trigger actions. 
+
+
 1. The basic principles of the REST architectural style.
+Representational State Transfer has 6 constraints. Client server architecture, stateless architecture, cacheable, layered system, code on demand and uniform interfaces. 
+
 1. Understand and explain the use of Express Routers.
+Routers are a way of organizing Express applications. They behave like mini Express applications and can have their own routing and middleware. 
+
 1. Describe tooling used to manually test the correctness of an API.
+
+Postman, Insomnia are all tooling to test the correctness of an API. They allow us to test the different CRUD requests. 

@@ -35,7 +35,8 @@ router.get('/:id/actions', (req, res, next) => {
 })
 
 router.put('/:id', validateProject,(req, res, next) => {
-    Projects.update(req.params.id, req.body)
+    Projects.update(req.params.id, {description: req.body})
+    const changes = req.body
     .then(updated => {
         res.status(200).json(updated)
     })
