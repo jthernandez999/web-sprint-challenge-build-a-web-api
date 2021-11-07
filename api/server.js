@@ -30,4 +30,4 @@ server.get('/', (req, res) => {
 // Build your projects router in /api/projects/projects-router.js
 // Do NOT `server.listen()` inside this file!
 
-module.exports = server;
+module.exports = server
