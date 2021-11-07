@@ -16,10 +16,13 @@ const Projects = require('./projects-model')
 
 function validateProject(req, res, next) {
     const { name, description, completed } = req.body
-    if (name || description || completed)  {
-        next()
+    if (!name || !description || !completed) {
+        res.status(400).json({
+            message: 'body is missing name or description'
+        })
     } else {
-        next({ status:400, message: 'body is missing name or description'})
+        req.body = { name, description, completed }
+        next()
     }
 }
 

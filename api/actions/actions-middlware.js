@@ -14,14 +14,14 @@ async function validateId(req, res, next) {
             next()
         }
     } catch (err){
-        res.status(500).json({
-            message: 'problem finding project with that id'
-        })
+        next(err)
+        // res.status(500).json({
+        //     message: 'problem finding project with that id'
+        // })
     }
 }
 
 function validateActionBody(req, res, next) {
-    Action.get(req.params.id)
     const { project_id, description, notes } =  req.body
         if(!project_id || !description || !notes) {
             res.status(400).json({
@@ -29,7 +29,8 @@ function validateActionBody(req, res, next) {
             })
         } else {
             console.log('from validateActionBody', req.body)
-            req.body = { project_id, description, notes }
+            req.action = { project_id, description, notes }
+            console.log(req.action)
             next()
         }
 }

@@ -38,7 +38,7 @@ router.post('/', validateActionBody, validateId, (req, res, next) => {
         .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', validateActionBody, validateId,(req, res, next) => {
     Actions.update(req.params.id, req.body)
     .then(updated  => {
         res.status(200).json(updated)

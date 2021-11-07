@@ -36,8 +36,22 @@ router.get('/:id/actions', (req, res, next) => {
 
 router.put('/:id', validateProject,(req, res, next) => {
     Projects.update(req.params.id, req.body)
+    .then(updated => {
+        res.status(200).json(updated)
+    })
+    .catch(next)
+})
+router.put('/:id', validateProject,(req, res, next) => {
+    Projects.update(req.params.id, req.body)
     .then(updatedProject => {
-        res.status(200).json(updatedProject)
+        if(!updatedProject) {
+            res.status(404).json({
+                message: 'there is no project with the given id'
+            })
+        } else {
+            res.status(200).json(updatedProject)
+        }
+        
     })
     .catch(next)
 })
