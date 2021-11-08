@@ -35,16 +35,85 @@ function validateId(req, res, next) {
 // }
 
 function validateProject(req, res, next) {
-    const { name, description, completed } = req.body 
-    if( name && description || completed) {
-        next()
-    } else {
+    const { name, description } = req.body 
+    if( !name || !description ) {
         next({
             status: 400, 
             message: 'body is missing name, description'
         })
+    } else {
+        next()
     }
 }
+function validateCompletedProject(req, res, next) {
+    const { name, description, completed } = req.body 
+    if(!name) { 
+        next({
+            status: 400, 
+            message: 'body is missing name'
+        })
+    } else if (!description) {
+        next({
+            status: 400, 
+            message: 'body is missing description'
+        })
+    }  
+    else {
+        req.name = name.trim()
+        req.description = description.trim()
+        req.completed = completed
+        next()
+    }
+}
+// function validateCompletedProject(req, res, next) {
+//     const { name, description, completed } = req.body 
+//     if(!name) { 
+//         next({
+//             status: 400, 
+//             message: 'body is missing name'
+//         })
+//     } else if (!description) {
+//         next({
+//             status: 400, 
+//             message: 'body is missing description'
+//         })
+//     }  else if (!completed) {
+//         next({
+//             status: 400, 
+//             message: 'body is missing completed'
+//         })
+//     } else {
+//         req.name = name.trim()
+//         req.description = description.trim()
+//         req.completed = completed
+//         next()
+//     }
+// }
+// function validateCompletedProject(req, res, next) {
+//     const { name, description, completed } = req.body 
+//     if( !name && !description && !completed) {
+//         next({
+//             status: 400, 
+//             message: 'body is missing name, description'
+//         })
+//     } else {
+//         next()
+//     }
+// }
+
+// function validateCompletedProject(req, res, next) {
+//     const { name, description, completed } = req.body 
+//     if( name && description && completed) {
+//         req.body = { name, description, completed }
+//         next()
+//     } else {
+//         res.status(400).json({
+//             message: 'body is missing name, description, or completed'
+//         })
+//     }
+// }
+
+
 
 
 // function validateProject(req, res, next) {
@@ -63,4 +132,5 @@ function validateProject(req, res, next) {
 module.exports = {
     validateProject,
     validateId,
+    validateCompletedProject,
 }

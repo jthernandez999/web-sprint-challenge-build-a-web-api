@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const Projects = require('./projects-model')
 
-const { validateProject, validateId, } = require('./projects-middleware');
+const { validateProject, validateId, validateCompletedProject, } = require('./projects-middleware');
 
 
 router.get('/', (req, res, next) => {
@@ -36,35 +36,6 @@ router.get('/:id/actions', (req, res, next) => {
 })
 
 
-router.put('/:id', validateProject, validateId,(req, res, next) => {
-    Projects.update(req.params.id, req.body)
-    .then(() => {
-        return Projects.get(req.params.id)
-    })
-    .then(project => {
-        if(project){ 
-            res.json(project)
-        } else {
-            res.status(404).json({ 
-                message: 'here is no project with the given id'
-            })
-        }
-    })
-    .catch(next)
-})
-
-// router.put('/:id', validateProject, validateId,(req, res, next) => {
-//     Projects.update(req.params.id, req.body)
-//     .then(() => {
-//         return Projects.get(req.params.id)
-//     })
-//     .then(project => {
-//         res.json(project)
-//     })
-//     .catch(next)
-// })
-
-
 router.delete('/:id', async (req, res, next) =>{
     try {
         const toBeDeleted = await Projects.get(req.params.id)
@@ -85,6 +56,33 @@ router.post('/', validateProject, (req, res, next) => {
     Projects.insert(req.body)
     .then(projects => {
         res.status(201).json(projects)
+    })
+    .catch(next)
+})
+
+
+
+// router.put('/:id', validateCompletedProject, validateProject,(req, res, next) => {
+//     const { description, name, completed } = req.body
+//     Projects.update(req.params.id, req.body)
+//     .then(project => {
+//         if(project){ 
+//             res.json(project)
+//         } 
+//     })
+//     .catch(next)
+// })
+
+router.put('/:id', validateCompletedProject,(req, res, next) => {
+    const { description, name, completed } = req.body
+    Projects.update(req.params.id, req.body)
+    .then(() => {
+        return Projects.get(req.params.id)
+    })
+    .then(project => {
+        if(project){ 
+            res.json(project)
+        } 
     })
     .catch(next)
 })
